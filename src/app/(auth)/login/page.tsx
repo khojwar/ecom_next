@@ -85,11 +85,11 @@ export default function Login() {
                             )}
                         />
                         {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+                        <a className="text-sm italic hover:underline" >Forgot your password?</a>
                     </div>
 
                     <Button type="submit" variant={"success"} className="w-full">Login</Button>
                 </form>
-                <a className="text-sm italic hover:underline" >Forgot your password?</a>
 
                 <div className="relative my-4">
                     <Separator />
