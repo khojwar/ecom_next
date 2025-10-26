@@ -34,6 +34,7 @@ export default function Customer() {
         return (
             <div>
                 <p>Signed in as {session?.user?.email}</p>
+                <p>Your role is: {session?.user?.role} </p>
                 <p>Welcome to the customer dashboard!</p>
 
                 <Button variant="link" onClick={handleSignOut}>Sign out</Button>
