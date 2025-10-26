@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 
 import { FcGoogle } from 'react-icons/fc';
+import { useRouter } from "next/navigation";
 
 
 // Define Zod schema
@@ -20,7 +21,6 @@ const loginSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email address"),
   password: z
     .string()
-    .min(1, "Password is required")
     .min(4, "Password must be at least 4 characters"),
 });
 
@@ -37,23 +37,36 @@ export default function Login() {
     });
 
     const { data: session } = useSession();
+    const router = useRouter();
 
-    const onSubmit: SubmitHandler<LoginFormData> = (data) => {
+    const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
         console.log(data);
+        const result = await signIn("credentials", {
+            redirect: false,
+            email: data.email,
+            password: data.password,
+        });        
+
+        if (result?.error) {
+            console.error("Login failed:", result.error);
+        } else {
+            // console.log("Login successful");
+            if (session?.user?.role === "admin") {
+                await router.push("/admin");
+            } else if (session?.user?.role === "supplier") {
+                await router.push("/supplier");
+            } else {
+                await router.push("/customer");
+            }
+        }
     };
 
-    const handleGoogleSubmit = () => {
-        signIn("google", { callbackUrl: "/customer" });
+    const handleGoogleSubmit = async () => {
+        await signIn("google", { 
+            callbackUrl: session?.user?.role === "admin" ? "/admin" : (session?.user?.role === "supplier" ? "/supplier" : "/customer")
+        });
     };
 
-    // if (session) {
-    //     return (
-    //         <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-    //             Signed in as {session.user?.email} <br />
-    //             <button onClick={() => signOut()}>Sign out</button>
-    //         </div>
-    //     );
-    // }
     return (
         <div className="flex justify-center items-center h-screen">
             <Card className="w-full max-w-sm p-4">

@@ -23,7 +23,7 @@ export const authOptions = {
                     throw new Error("Missing email or password")
                 }
 
-                const user = { id: "1", name: "tika", email: "tikaram.com", password: "tika" }
+                const user = { id: "1", name: "tika", email: "tika@gmail.com", password: "tika" }
 
                 if (credentials.email === user.email && credentials.password === user.password) {
                     return user
@@ -37,7 +37,7 @@ export const authOptions = {
         async jwt({ token, user }: any) {
         if (user) {
             token.id = user.id;
-            token.role = user.role || "admin";   // Add role on sign-in
+            token.role = user.role || "supplier";   // Add role on sign-in
         }
         return token;
         },
