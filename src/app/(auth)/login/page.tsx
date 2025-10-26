@@ -60,7 +60,7 @@ export default function Login() {
                 <div className="flex flex-col justify-center items-center">
                     <div className="flex flex-col justify-center items-center mb-4">
                         <h1 className="text-3xl font-medium"> Sign in </h1>
-                        <p className="text-xl">Get access to more learning features</p>
+                        <p className="text-xl">Get access to more features</p>
                     </div>
                     <div className="text-gray-400">Don't have an account? <a href="#" className="text-[#059862]">Register</a></div>
                 </div>

@@ -30,7 +30,7 @@ export default function Customer() {
         return null;
     }
 
-    if (status === "authenticated") {
+    if (status === "authenticated" && (session?.user?.role === "customer" || session?.user?.role === "admin")) {
         return (
             <div>
                 <p>Signed in as {session?.user?.email}</p>
@@ -40,6 +40,9 @@ export default function Customer() {
                 <Button variant="link" onClick={handleSignOut}>Sign out</Button>
             </div>
         )
+    } else {
+        router.push('/login');
+        return null;
     }
 
 }
